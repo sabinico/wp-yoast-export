@@ -180,9 +180,21 @@ class Wp_Yoast_Export_Admin {
 	public function export_metadata_yoast() {
 
 			global $wpdb;
-			$sql = "SELECT * FROM $wpdb->postmeta metadata LEFT JOIN $wpdb->posts posts ON posts.ID = metadata.post_id";
+			$options = get_option($this->plugin_name);
+
+			//posts
+			$posts = array();
+			$sql = "SELECT ID, post_title, post_content FROM $wpdb->posts WHERE post_status = 'publish'";
 			$results = $wpdb->get_results($sql);
-			print '<pre>'.print_r($results, true).'</pre>';
+			foreach($results as $post){
+				$yoast_kw_query = $wpdb->get_results("SELECT metadata.meta_value FROM $wpdb->postmeta metadata WHERE metadata.post_id = $post->ID AND metadata.meta_key = '_yoast_wpseo_focuskw'");
+				$yoast_kw = (count($yoast_kw_query) > 0) ? $yoast_kw_query[0]->meta_value : 'undefined';
+				$post->yoast_kw = $yoast_kw;
+
+				$posts[] = $post;
+			}
+
+			print '<pre>'.print_r($posts, true).'</pre>';
 	}
 
 }
