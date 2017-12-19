@@ -144,7 +144,45 @@ class Wp_Yoast_Export_Admin {
 	 */
 
 	public function display_plugin_setup_page() {
+
 	    include_once( 'partials/wp-yoast-export-admin-display.php' );
+			$this->export_metadata_yoast();
+	}
+
+	/**
+	 * Validator the settings page for this plugin.
+	 *
+	 * @since    1.0.0
+	 */
+	public function validate($input) {
+    // All checkboxes inputs
+    $valid = array();
+
+    //Cleanup
+    $valid['count_key'] = (isset($input['count_key']) && !empty($input['count_key'])) ? 1 : 0;
+    $valid['remove_html'] = (isset($input['remove_html']) && !empty($input['remove_html'])) ? 1: 0;
+    $valid['include_img_key'] = (isset($input['include_img_key']) && !empty($input['include_img_key'])) ? 1 : 0;
+
+    return $valid;
+ }
+
+ public function options_update() {
+    register_setting($this->plugin_name, $this->plugin_name, array($this, 'validate'));
+ }
+
+
+	/**
+	 * Export the request data.
+	 *
+	 * @since    1.0.0
+	 */
+
+	public function export_metadata_yoast() {
+
+			global $wpdb;
+			$sql = "SELECT * FROM $wpdb->postmeta metadata LEFT JOIN $wpdb->posts posts ON posts.ID = metadata.post_id";
+			$results = $wpdb->get_results($sql);
+			print '<pre>'.print_r($results, true).'</pre>';
 	}
 
 }

@@ -14,64 +14,55 @@
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
 <div class="wrap">
 
     <h2><?php echo esc_html(get_admin_page_title()); ?></h2>
 
-    <form method="post" name="cleanup_options" action="options.php">
+    <form method="post" name="yoast_export_options" action="options.php">
 
-        <!-- remove some meta and generators from the <head> -->
+      <?php
+      //Grab all options
+      $options = get_option($this->plugin_name);
+
+      // Cleanup
+      $count_key = $options['count_key'];
+      $remove_html = $options['remove_html'];
+      $include_img_key = $options['include_img_key'];
+      ?>
+
+      <?php
+      settings_fields($this->plugin_name);
+      do_settings_sections($this->plugin_name);
+      ?>
+
+        <!-- Contar numero de repeticiones palabra clave -->
         <fieldset>
-            <legend class="screen-reader-text"><span>Clean WordPress head section</span></legend>
-            <label for="<?php echo $this->plugin_name; ?>-cleanup">
-                <input type="checkbox" id="<?php echo $this->plugin_name; ?>-cleanup" name="<?php echo $this->plugin_name; ?> [cleanup]" value="1"/>
-                <span><?php esc_attr_e('Clean up the head section', $this->plugin_name); ?></span>
+            <legend class="screen-reader-text"><span>Contador de repeticiones de la palabra clave</span></legend>
+            <label for="<?php echo $this->plugin_name; ?>-count_key">
+                <input type="checkbox" id="<?php echo $this->plugin_name; ?>-count_key" name="<?php echo $this->plugin_name; ?>[count_key]" value="1" <?php checked($count_key, 1); ?>/>
+                <span><?php esc_attr_e('Contador de repeticiones de la palabra clave', $this->plugin_name); ?></span>
             </label>
         </fieldset>
 
-        <!-- remove injected CSS from comments widgets -->
+        <!-- Eliminar HTML para contar palabras -->
         <fieldset>
-            <legend class="screen-reader-text"><span>Remove Injected CSS for comment widget</span></legend>
-            <label for="<?php echo $this->plugin_name; ?>-comments_css_cleanup">
-                <input type="checkbox" id="<?php echo $this->plugin_name; ?>-comments_css_cleanup" name="<?php echo $this->plugin_name; ?>[comments_css_cleanup]" value="1"/>
-                <span><?php esc_attr_e('Remove Injected CSS for comment widget', $this->plugin_name); ?></span>
+            <legend class="screen-reader-text"><span>Eliminar HTML para contar palabras</span></legend>
+            <label for="<?php echo $this->plugin_name; ?>-remove_html">
+                <input type="checkbox" id="<?php echo $this->plugin_name; ?>-remove_html" name="<?php echo $this->plugin_name; ?>[remove_html]" value="1" <?php checked($remove_html, 1); ?>/>
+                <span><?php esc_attr_e('Eliminar HTML para contar palabras', $this->plugin_name); ?></span>
             </label>
         </fieldset>
 
-        <!-- remove injected CSS from gallery -->
+        <!-- Incluir palabra clave de los pie de fotos -->
         <fieldset>
-            <legend class="screen-reader-text"><span>Remove Injected CSS for galleries</span></legend>
-            <label for="<?php echo $this->plugin_name; ?>-gallery_css_cleanup">
-                <input type="checkbox" id="<?php echo $this->plugin_name; ?>-gallery_css_cleanup" name="<?php echo $this->plugin_name; ?>[gallery_css_cleanup]" value="1" />
-                <span><?php esc_attr_e('Remove Injected CSS for galleries', $this->plugin_name); ?></span>
+            <legend class="screen-reader-text"><span>Incluir palabra clave de los pie de fotos</span></legend>
+            <label for="<?php echo $this->plugin_name; ?>-include_img_key">
+                <input type="checkbox" id="<?php echo $this->plugin_name; ?>-include_img_key" name="<?php echo $this->plugin_name; ?>[include_img_key]" value="1" <?php checked($include_img_key, 1); ?>/>
+                <span><?php esc_attr_e('Incluir palabra clave de los pie de fotos', $this->plugin_name); ?></span>
             </label>
         </fieldset>
 
-        <!-- add post,page or product slug class to body class -->
-        <fieldset>
-            <legend class="screen-reader-text"><span><?php _e('Add Post, page or product slug to body class', $this->plugin_name); ?></span></legend>
-            <label for="<?php echo $this->plugin_name; ?>-body_class_slug">
-                <input type="checkbox" id="<?php echo $this->plugin_name;?>-body_class_slug" name="<?php echo $this->plugin_name; ?>[body_class_slug]" value="1" />
-                <span><?php esc_attr_e('Add Post slug to body class', $this->plugin_name); ?></span>
-            </label>
-        </fieldset>
-
-        <!-- load jQuery from CDN -->
-        <fieldset>
-            <legend class="screen-reader-text"><span><?php _e('Load jQuery from CDN instead of the basic wordpress script', $this->plugin_name); ?></span></legend>
-            <label for="<?php echo $this->plugin_name; ?>-jquery_cdn">
-                <input type="checkbox" id="<?php echo $this->plugin_name; ?>-jquery_cdn" name="<?php echo $this->plugin_name; ?>[jquery_cdn]" value="1" />
-                <span><?php esc_attr_e('Load jQuery from CDN', $this->plugin_name); ?></span>
-            </label>
-                    <fieldset>
-                        <p>You can choose your own cdn provider and jQuery version(default will be Google Cdn and version 1.11.1)-Recommended CDN are <a href="https://cdnjs.com/libraries/jquery">CDNjs</a>, <a href="https://code.jquery.com/jquery/">jQuery official CDN</a>, <a href="https://developers.google.com/speed/libraries/#jquery">Google CDN</a> and <a href="http://www.asp.net/ajax/cdn#jQuery_Releases_on_the_CDN_0">Microsoft CDN</a></p>
-                        <legend class="screen-reader-text"><span><?php _e('Choose your prefered cdn provider', $this->plugin_name); ?></span></legend>
-                        <input type="url" class="regular-text" id="<?php echo $this->plugin_name; ?>-cdn_provider" name="<?php echo $this->plugin_name; ?>[cdn_provider]" value=""/>
-                    </fieldset>
-        </fieldset>
-
-        <?php submit_button('Save all changes', 'primary','submit', TRUE); ?>
+        <?php submit_button('Guardar todos los cambios', 'primary','submit', TRUE); ?>
 
     </form>
 
