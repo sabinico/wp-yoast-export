@@ -28,6 +28,9 @@
         <th>Repeticiones</th>
         <?php endif; ?>
         <th>Contador palabras</th>
+        <th>URL</th>
+        <th>Autor</th>
+        <th>Fecha</th>
       </tr>
     <?php foreach($export as $post): ?>
       <tr>
@@ -38,6 +41,9 @@
         <td><?php print $post->yoast_kw_count; ?></td>
         <?php endif; ?>
         <td><?php print $post->words_count; ?></td>
+        <td><?php print $post->guid; ?></td>
+        <td><?php print get_user_by('ID',$post->post_author)->display_name; ?></td>
+        <td><?php print $post->post_date; ?></td>
       </tr>
     <?php endforeach; ?>
     </table>

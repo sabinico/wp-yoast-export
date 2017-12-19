@@ -187,7 +187,7 @@ class Wp_Yoast_Export_Admin {
 
 			//posts
 			$posts = array();
-			$sql = "SELECT ID, post_title, post_content FROM $wpdb->posts WHERE post_status = 'publish'";
+			$sql = "SELECT ID, post_title, post_content, post_author, post_date, guid FROM $wpdb->posts WHERE post_status = 'publish'";
 			$results = $wpdb->get_results($sql);
 			foreach($results as $post){
 				$yoast_kw_query = $wpdb->get_results("SELECT metadata.meta_value FROM $wpdb->postmeta metadata WHERE metadata.post_id = $post->ID AND metadata.meta_key = '_yoast_wpseo_focuskw'");
