@@ -196,6 +196,15 @@ class Wp_Yoast_Export_Admin {
 					$post->yoast_kw_count = substr_count(strtolower(strip_tags($post->post_content)),strtolower($yoast_kw));
 				}
 				$post->yoast_kw = $yoast_kw;
+
+				$score_content_query = $wpdb->get_results("SELECT metadata.meta_value FROM $wpdb->postmeta metadata WHERE metadata.post_id = $post->ID AND metadata.meta_key = '_yoast_wpseo_content_score'");
+				$score_content = (count($score_content_query) > 0) ? $score_content_query[0]->meta_value : 0;
+				$post->score_content = $score_content;
+
+				$score_legi_query = $wpdb->get_results("SELECT metadata.meta_value FROM $wpdb->postmeta metadata WHERE metadata.post_id = $post->ID AND metadata.meta_key = '_yoast_wpseo_linkdex'");
+				$score_legi = (count($score_legi_query) > 0) ? $score_legi_query[0]->meta_value : 0;
+				$post->score_legi = $score_legi;
+
 				$post->words_count = ($options['remove_html']) ? str_word_count(strip_tags($post->post_content)) : str_word_count($post->post_content);
 
 				$posts[] = $post;

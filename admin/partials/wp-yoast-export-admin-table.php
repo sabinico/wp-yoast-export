@@ -24,6 +24,8 @@
         <th>ID</th>
         <th>Titulo</th>
         <th>Palabra clave</th>
+        <th>Score content</th>
+        <th>Legibilidad</th>
         <?php if($options['count_key']): ?>
         <th>Repeticiones</th>
         <?php endif; ?>
@@ -37,6 +39,8 @@
         <td><?php print $post->ID; ?></td>
         <td><?php print $post->post_title; ?></td>
         <td><?php print $post->yoast_kw; ?></td>
+        <td><?php print $post->score_content; ?></td>
+        <td><?php print $post->score_legi; ?></td>
         <?php if($options['count_key']): ?>
         <td><?php print $post->yoast_kw_count; ?></td>
         <?php endif; ?>
