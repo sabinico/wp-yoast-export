@@ -63,6 +63,10 @@
         </fieldset>
 
         <?php submit_button('Guardar todos los cambios', 'primary','submit', TRUE); ?>
+        <?php
+        $export_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."&export=1";
+        ?>
+        <a class="button button-primary" href="<?php print $export_link; ?>">EXPORTAR AHORA</a>
 
     </form>
 

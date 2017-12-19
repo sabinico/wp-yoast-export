@@ -146,7 +146,10 @@ class Wp_Yoast_Export_Admin {
 	public function display_plugin_setup_page() {
 
 	    include_once( 'partials/wp-yoast-export-admin-display.php' );
-			$this->export_metadata_yoast();
+			if(isset($_REQUEST['export'])){
+				$export = $this->export_metadata_yoast();
+				include_once( 'partials/wp-yoast-export-admin-table.php' );
+			}
 	}
 
 	/**
@@ -189,12 +192,17 @@ class Wp_Yoast_Export_Admin {
 			foreach($results as $post){
 				$yoast_kw_query = $wpdb->get_results("SELECT metadata.meta_value FROM $wpdb->postmeta metadata WHERE metadata.post_id = $post->ID AND metadata.meta_key = '_yoast_wpseo_focuskw'");
 				$yoast_kw = (count($yoast_kw_query) > 0) ? $yoast_kw_query[0]->meta_value : 'undefined';
+				if($options['count_key']){
+					$post->yoast_kw_count = substr_count(strtolower(strip_tags($post->post_content)),strtolower($yoast_kw));
+				}
 				$post->yoast_kw = $yoast_kw;
+				$post->words_count = ($options['remove_html']) ? str_word_count(strip_tags($post->post_content)) : str_word_count($post->post_content);
 
 				$posts[] = $post;
 			}
 
-			print '<pre>'.print_r($posts, true).'</pre>';
+			//print '<pre>'.print_r($posts, true).'</pre>';
+			return $posts;
 	}
 
 }
