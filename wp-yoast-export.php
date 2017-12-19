@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       WP Yoast Export
  * Plugin URI:        https://github.com/sabinico/wp-yoast-export
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Exporta facilmente los SEO-metadatos creados por YOAST de tus posts
  * Version:           1.0.0
  * Author:            Sabinico
  * Author URI:        https://sabinico.com
