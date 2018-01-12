@@ -44,7 +44,7 @@
         <?php if($options['count_key']): ?>
         <td><?php print $post->yoast_kw_count; ?></td>
         <?php endif; ?>
-        <td><?php print $post->words_count; ?></td>
+        <td><?php print $post->words_count; ?> (<?php print $post->words_count_2; ?>)</td>
         <td><?php print $post->guid; ?></td>
         <td><?php print get_user_by('ID',$post->post_author)->display_name; ?></td>
         <td><?php print $post->post_date; ?></td>
