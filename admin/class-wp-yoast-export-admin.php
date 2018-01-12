@@ -236,7 +236,7 @@ class Wp_Yoast_Export_Admin {
 					$array['CATEGORIA'] = implode(", ", $post->categories);
 					$array['URL'] = get_permalink($post->ID);
 					if($options['export_content']){
-						$array['CONTENIDO'] = $post->post_content;
+						$array['CONTENIDO'] = $post->content_plain;
 					}
 					$array['SCORE_CONTENT'] = $post->score_content;
 					$array['SCORE_LEGIBILIDAD'] = $post->score_legi;
