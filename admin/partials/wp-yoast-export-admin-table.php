@@ -45,7 +45,7 @@
         <td><?php print $post->post_title; ?></td>
         <td><?php print get_user_by('ID',$post->post_author)->display_name; ?></td>
         <td>CATEGORY</td>
-        <td>URL</td>
+        <td>URL<?php print @get_permalink($post->ID); ?></td>
         <?php if($options['export_content']): ?>
         <td><?php print $post->content_plain; ?></td>
         <?php endif; ?>
