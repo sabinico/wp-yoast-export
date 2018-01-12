@@ -44,7 +44,7 @@
         <td><?php print $post->post_date; ?></td>
         <td><?php print $post->post_title; ?></td>
         <td><?php print get_user_by('ID',$post->post_author)->display_name; ?></td>
-        <td>CATEGORY: <?php print implode(", ", $post->categories); ?></td>
+        <td><?php print implode(", ", $post->categories); ?></td>
         <td><?php print get_permalink($post->ID); ?></td>
         <?php if($options['export_content']): ?>
         <td><?php print $post->content_plain; ?></td>
