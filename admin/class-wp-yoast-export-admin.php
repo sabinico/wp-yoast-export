@@ -148,6 +148,7 @@ class Wp_Yoast_Export_Admin {
 	    include_once( 'partials/wp-yoast-export-admin-display.php' );
 			if(isset($_REQUEST['export'])){
 				$export = (isset($_REQUEST['specific'])) ? $this->export_metadata_yoast($_REQUEST['specific']) : $this->export_metadata_yoast();
+				$this->array2csv($export);
 				include_once( 'partials/wp-yoast-export-admin-table.php' );
 			}
 	}
@@ -226,6 +227,20 @@ class Wp_Yoast_Export_Admin {
 
 			//print '<pre>'.print_r($posts, true).'</pre>';
 			return $posts;
+	}
+
+	function array2csv(array &$array){
+	   if (count($array) == 0) {
+	     return null;
+	   }
+	   ob_start();
+	   $df = fopen("yoast_data_exported.csv", 'w');
+	   fputcsv($df, array_keys(reset($array)));
+	   foreach ($array as $row) {
+	      fputcsv($df, $row);
+	   }
+	   fclose($df);
+	   return ob_get_clean();
 	}
 
 }
