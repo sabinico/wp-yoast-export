@@ -165,7 +165,7 @@ class Wp_Yoast_Export_Admin {
     $valid['count_key'] = (isset($input['count_key']) && !empty($input['count_key'])) ? 1 : 0;
     $valid['remove_html'] = (isset($input['remove_html']) && !empty($input['remove_html'])) ? 1: 0;
 		$valid['include_img_key'] = (isset($input['include_img_key']) && !empty($input['include_img_key'])) ? 1 : 0;
-		$valid['export_content'] = (isset($input['include_img_key']) && !empty($input['include_img_key'])) ? 1 : 0;
+		$valid['export_content'] = (isset($input['export_content']) && !empty($input['export_content'])) ? 1 : 0;
 
     return $valid;
  }
