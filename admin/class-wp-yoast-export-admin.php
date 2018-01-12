@@ -213,8 +213,10 @@ class Wp_Yoast_Export_Admin {
 				$post->score_legi = $score_legi;
 
 				$content_without_bb = preg_replace('#\[[^\]]+\]#', '', strip_tags($post->post_content));
-				$post->content_plain = $content_without_bb;
-				$post->words_count = str_word_count($post->content_plain, 0, 'áéíóúüñ');
+				if($options['export_content']){
+					$post->content_plain = $content_without_bb;
+				}
+				$post->words_count = str_word_count($content_without_bb, 0, 'áéíóúüñ');
 
 				$categories = [];
 				foreach(get_the_category($post->ID) as $cat){
