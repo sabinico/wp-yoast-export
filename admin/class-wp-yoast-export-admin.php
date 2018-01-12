@@ -148,7 +148,7 @@ class Wp_Yoast_Export_Admin {
 	    include_once( 'partials/wp-yoast-export-admin-display.php' );
 			if(isset($_REQUEST['export'])){
 				$export = (isset($_REQUEST['specific'])) ? $this->export_metadata_yoast($_REQUEST['specific']) : $this->export_metadata_yoast();
-				$this->array2csv($export);
+				$this->array2csv($this->export_metadata_yoast(null, true));
 				include_once( 'partials/wp-yoast-export-admin-table.php' );
 			}
 	}
@@ -182,7 +182,7 @@ class Wp_Yoast_Export_Admin {
 	 * @since    1.0.0
 	 */
 
-	public function export_metadata_yoast($specific = null) {
+	public function export_metadata_yoast($specific = null, $as_array = false) {
 
 			global $wpdb;
 			$options = get_option($this->plugin_name);
@@ -222,7 +222,7 @@ class Wp_Yoast_Export_Admin {
 				}
 				$post->categories = $categories;
 
-				$posts[] = $post;
+				$posts[] = ($as_array) ? (array) $post : $post;
 			}
 
 			//print '<pre>'.print_r($posts, true).'</pre>';
