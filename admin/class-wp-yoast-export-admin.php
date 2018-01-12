@@ -227,7 +227,27 @@ class Wp_Yoast_Export_Admin {
 				}
 				$post->categories = $categories;
 
-				$posts[] = ($as_array) ? (array) $post : $post;
+				if($as_array){
+					$array = [];
+					$array['ID'] = $post->ID;
+					$array['FECHA'] = $post->post_date;
+					$array['TITULO'] = $post->post_title;
+					$array['AUTOR'] = get_user_by('ID',$post->post_author)->display_name;
+					$array['CATEGORIA'] = implode(", ", $post->categories);
+					$array['URL'] = get_permalink($post->ID);
+					if($options['export_content']){
+						$array['CONTENIDO'] = $post->post_content;
+					}
+					$array['SCORE_CONTENT'] = $post->score_content;
+					$array['SCORE_LEGIBILIDAD'] = $post->score_legi;
+					$array['CONTADOR_PALABRAS'] = $post->words_count;
+					$array['PALABRA_CLAVE'] = $post->yoast_kw;
+					if($options['count_key']){
+						$array['REPETICIONES'] = $post->yoast_kw_count;
+					}
+				}
+
+				$posts[] = ($as_array) ? $array : $post;
 			}
 
 			//print '<pre>'.print_r($posts, true).'</pre>';
