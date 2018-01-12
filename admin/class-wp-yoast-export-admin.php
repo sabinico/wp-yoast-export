@@ -216,6 +216,9 @@ class Wp_Yoast_Export_Admin {
 				if($options['export_content']){
 					$post->content_plain = $content_without_bb;
 				}
+				if($options['export_content'] == false && $as_array == true){
+					$post->post_content = '';
+				}
 				$post->words_count = str_word_count($content_without_bb, 0, 'áéíóúüñ');
 
 				$categories = [];
