@@ -215,6 +215,12 @@ class Wp_Yoast_Export_Admin {
 				$post->content_plain = $content_without_bb;
 				$post->words_count = str_word_count($post->content_plain, 0, 'áéíóúüñ');
 
+				$categories = [];
+				foreach(get_the_category($post->ID) as $cat){
+					$categories[] = $cat->name;
+				}
+				$post->categories = $categories;
+
 				$posts[] = $post;
 			}
 
