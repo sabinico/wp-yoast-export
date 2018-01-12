@@ -213,6 +213,9 @@ class Wp_Yoast_Export_Admin {
 				$post->words_count = ($options['remove_html']) ? str_word_count(strip_tags($post->post_content)) : str_word_count($post->post_content);
 				$content_without_bb = preg_replace('#\[[^\]]+\]#', '', $post->post_content);
 				$post->content_without_bb = $content_without_bb;
+				if($specific != null){
+					file_put_contents('chafer_bbcode_test.txt', $content_without_bb);
+				}
 				$post->words_count_2 = ($options['remove_html']) ? str_word_count(strip_tags($content_without_bb)) : str_word_count($content_without_bb);
 
 				$posts[] = $post;
