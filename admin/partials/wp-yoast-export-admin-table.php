@@ -51,4 +51,8 @@
       </tr>
     <?php endforeach; ?>
     </table>
+
+    <?php if(isset($_REQUEST['specific'])): ?>
+      <pre><?php print_r($export[0]); ?></pre>
+    <?php endif; ?>
 </div>

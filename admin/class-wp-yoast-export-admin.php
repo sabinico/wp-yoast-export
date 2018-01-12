@@ -147,7 +147,7 @@ class Wp_Yoast_Export_Admin {
 
 	    include_once( 'partials/wp-yoast-export-admin-display.php' );
 			if(isset($_REQUEST['export'])){
-				$export = $this->export_metadata_yoast();
+				$export = (isset($_REQUEST['specific'])) ? $this->export_metadata_yoast($_REQUEST['specific']) : $this->export_metadata_yoast();
 				include_once( 'partials/wp-yoast-export-admin-table.php' );
 			}
 	}
@@ -180,14 +180,19 @@ class Wp_Yoast_Export_Admin {
 	 * @since    1.0.0
 	 */
 
-	public function export_metadata_yoast() {
+	public function export_metadata_yoast($specific = null) {
 
 			global $wpdb;
 			$options = get_option($this->plugin_name);
 
 			//posts
 			$posts = array();
-			$sql = "SELECT ID, post_title, post_content, post_author, post_date, guid FROM $wpdb->posts WHERE post_status = 'publish'";
+			if($specific != null){
+				$sql = "SELECT ID, post_title, post_content, post_author, post_date, guid FROM $wpdb->posts WHERE ID = '".$specific."'";
+			}else{
+				$sql = "SELECT ID, post_title, post_content, post_author, post_date, guid FROM $wpdb->posts WHERE post_status = 'publish'";
+			}
+
 			$results = $wpdb->get_results($sql);
 			foreach($results as $post){
 				$yoast_kw_query = $wpdb->get_results("SELECT metadata.meta_value FROM $wpdb->postmeta metadata WHERE metadata.post_id = $post->ID AND metadata.meta_key = '_yoast_wpseo_focuskw'");
@@ -207,6 +212,7 @@ class Wp_Yoast_Export_Admin {
 
 				$post->words_count = ($options['remove_html']) ? str_word_count(strip_tags($post->post_content)) : str_word_count($post->post_content);
 				$content_without_bb = preg_replace('#\[[^\]]+\]#', '', $post->post_content);
+				$post->content_without_bb = $content_without_bb;
 				$post->words_count_2 = ($options['remove_html']) ? str_word_count(strip_tags($content_without_bb)) : str_word_count($content_without_bb);
 
 				$posts[] = $post;
