@@ -44,8 +44,8 @@
         <td><?php print $post->post_date; ?></td>
         <td><?php print $post->post_title; ?></td>
         <td><?php print get_user_by('ID',$post->post_author)->display_name; ?></td>
-        <td>CATEGORY</td>
-        <td>URL<?php print @get_permalink($post->ID); ?></td>
+        <td>CATEGORY: <?php var_dump(get_the_category($post->ID)); ?></td>
+        <td><?php print get_permalink($post->ID); ?></td>
         <?php if($options['export_content']): ?>
         <td><?php print $post->content_plain; ?></td>
         <?php endif; ?>
