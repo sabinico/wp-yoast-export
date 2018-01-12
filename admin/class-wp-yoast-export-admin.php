@@ -164,7 +164,8 @@ class Wp_Yoast_Export_Admin {
     //Cleanup
     $valid['count_key'] = (isset($input['count_key']) && !empty($input['count_key'])) ? 1 : 0;
     $valid['remove_html'] = (isset($input['remove_html']) && !empty($input['remove_html'])) ? 1: 0;
-    $valid['include_img_key'] = (isset($input['include_img_key']) && !empty($input['include_img_key'])) ? 1 : 0;
+		$valid['include_img_key'] = (isset($input['include_img_key']) && !empty($input['include_img_key'])) ? 1 : 0;
+		$valid['export_content'] = (isset($input['include_img_key']) && !empty($input['include_img_key'])) ? 1 : 0;
 
     return $valid;
  }
@@ -202,21 +203,17 @@ class Wp_Yoast_Export_Admin {
 				}
 				$post->yoast_kw = $yoast_kw;
 
-				$score_content_query = $wpdb->get_results("SELECT metadata.meta_value FROM $wpdb->postmeta metadata WHERE metadata.post_id = $post->ID AND metadata.meta_key = '_yoast_wpseo_content_score'");
+				$score_content_query = $wpdb->get_results("SELECT metadata.meta_value FROM $wpdb->postmeta metadata WHERE metadata.post_id = $post->ID AND metadata.meta_key = '_yoast_wpseo_linkdex'");
 				$score_content = (count($score_content_query) > 0) ? $score_content_query[0]->meta_value : 0;
 				$post->score_content = $score_content;
 
-				$score_legi_query = $wpdb->get_results("SELECT metadata.meta_value FROM $wpdb->postmeta metadata WHERE metadata.post_id = $post->ID AND metadata.meta_key = '_yoast_wpseo_linkdex'");
+				$score_legi_query = $wpdb->get_results("SELECT metadata.meta_value FROM $wpdb->postmeta metadata WHERE metadata.post_id = $post->ID AND metadata.meta_key = '_yoast_wpseo_content_score'");
 				$score_legi = (count($score_legi_query) > 0) ? $score_legi_query[0]->meta_value : 0;
 				$post->score_legi = $score_legi;
 
-				$post->words_count = ($options['remove_html']) ? str_word_count(strip_tags($post->post_content)) : str_word_count($post->post_content);
 				$content_without_bb = preg_replace('#\[[^\]]+\]#', '', strip_tags($post->post_content));
-				$post->content_without_bb = $content_without_bb;
-				if($specific != null){
-					file_put_contents('chafer_bbcode_test.txt', $content_without_bb);
-				}
-				$post->words_count_2 = ($options['remove_html']) ? str_word_count(strip_tags($content_without_bb), 0, 'áéíóúüñ') : str_word_count($content_without_bb, 0 , 'áéíóúüñ');
+				$post->content_plain = $content_without_bb;
+				$post->words_count = str_word_count($post->content_plain, 0, 'áéíóúüñ');
 
 				$posts[] = $post;
 			}

@@ -22,32 +22,40 @@
     <table class="table table-hover">
       <tr>
         <th>ID</th>
-        <th>Titulo</th>
-        <th>Palabra clave</th>
+        <th>Fecha</th>
+        <th>Título</th>
+        <th>Autor</th>
+        <th>Categoría</th>
+        <th>URL</th>
+        <?php if($options['export_content']): ?>
+        <th>Contenido</th>
+        <?php endif; ?>
         <th>Score content</th>
         <th>Legibilidad</th>
+        <th>Contador palabras</th>
+        <th>Palabra clave</th>
         <?php if($options['count_key']): ?>
         <th>Repeticiones</th>
         <?php endif; ?>
-        <th>Contador palabras</th>
-        <th>URL</th>
-        <th>Autor</th>
-        <th>Fecha</th>
       </tr>
     <?php foreach($export as $post): ?>
       <tr>
         <td><?php print $post->ID; ?></td>
+        <td><?php print $post->post_date; ?></td>
         <td><?php print $post->post_title; ?></td>
-        <td><?php print $post->yoast_kw; ?></td>
+        <td><?php print get_user_by('ID',$post->post_author)->display_name; ?></td>
+        <td><?php wp_get_post_categories($post->ID); ?></td>
+        <td><?php print $post->guid; ?></td>
+        <?php if($options['export_content']): ?>
+        <td><?php print $post->content_plain; ?></td>
+        <?php endif; ?>
         <td><?php print $post->score_content; ?></td>
         <td><?php print $post->score_legi; ?></td>
+        <td><?php print $post->words_count; ?></td>
+        <td><?php print $post->yoast_kw; ?></td>
         <?php if($options['count_key']): ?>
         <td><?php print $post->yoast_kw_count; ?></td>
         <?php endif; ?>
-        <td><?php print $post->words_count; ?> (<?php print $post->words_count_2; ?>)</td>
-        <td><?php print $post->guid; ?></td>
-        <td><?php print get_user_by('ID',$post->post_author)->display_name; ?></td>
-        <td><?php print $post->post_date; ?></td>
       </tr>
     <?php endforeach; ?>
     </table>

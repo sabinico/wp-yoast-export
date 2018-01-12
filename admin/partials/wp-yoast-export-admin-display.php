@@ -28,6 +28,7 @@
       $count_key = $options['count_key'];
       $remove_html = $options['remove_html'];
       $include_img_key = $options['include_img_key'];
+      $export_content = $options['export_content'];
       ?>
 
       <?php
@@ -59,6 +60,15 @@
             <label for="<?php echo $this->plugin_name; ?>-include_img_key">
                 <input type="checkbox" id="<?php echo $this->plugin_name; ?>-include_img_key" name="<?php echo $this->plugin_name; ?>[include_img_key]" value="1" <?php checked($include_img_key, 1); ?>/>
                 <span><?php esc_attr_e('Incluir palabra clave de los pie de fotos', $this->plugin_name); ?></span>
+            </label>
+        </fieldset>
+
+        <!-- Incluir contenido en texto plano -->
+        <fieldset>
+            <legend class="screen-reader-text"><span>Exportar también contenido en texto plano (No HTML & NO BBCode)</span></legend>
+            <label for="<?php echo $this->plugin_name; ?>-export_content">
+                <input type="checkbox" id="<?php echo $this->plugin_name; ?>-export_content" name="<?php echo $this->plugin_name; ?>[export_content]" value="1" <?php checked($export_content, 1); ?>/>
+                <span><?php esc_attr_e('Exportar también contenido en texto plano (No HTML & NO BBCode)', $this->plugin_name); ?></span>
             </label>
         </fieldset>
 
